@@ -1,0 +1,2 @@
+请按照“CubeMX+VSCode+Ozone 配置STM32开发环境(Ninja)”中说明对环境进行配置，CMakeLists模版与说明后附录相同。
+STM32XXX.svd文件为培训及之后可能使用的MCU版本号，推荐放置于Ozene对应目录下（ .\Ozone\Config\Peripherals\...）

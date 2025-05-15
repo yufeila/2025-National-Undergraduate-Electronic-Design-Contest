@@ -1,0 +1,634 @@
+<!DOCTYPE html><html><head>
+      <title>CubeMX+VSCode+Ozone 配置STM32开发环境(Ninja)</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\dell\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.13\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      <script type="text/javascript" src="file:///c:\Users\dell\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.13\crossnote\dependencies\mermaid\mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="cubemx--vs-code--ozone-配置-stm32-开发环境ninja">CubeMX + VS Code + Ozone 配置 STM32 开发环境(Ninja) </h1>
+<p><img src="https://img.shields.io/badge/version-1.0.0-green"> <sp> <img src="https://img.shields.io/badge/author-Caikunzhen-lightgrey"><sp> <img src="https://img.shields.io/badge/system-windows-blue"></sp></sp></p>
+<div class="mermaid">graph TD
+id3[(STM32CubeMX&lt;br&gt;STM32图形化配置工具)]--&gt;id2([工程文件])--&gt;id5 &amp; id7 &amp; id1
+id5[(VS Code&lt;br&gt;可扩展编辑器)]--&gt;id9
+id77[(Ninja)]--&gt;id9
+id1[(GNU-Arm Embedded Toolchain&lt;br&gt;交叉编译工具链)]--&gt;id9([.elf 可执行文件])
+id7[(CMake&lt;br&gt;工程构建工具)]--&gt;id77
+id9--&gt;id10[[调试方案]]--&gt;id12[(Cortex-Debug插件&lt;br&gt;基于GDB Server, 仅能断点调试)]
+id11--&gt;id14[(J-Link)]--&gt;id19
+id12--&gt;id17[(OpenOCD)]--&gt;...
+id15[(CMSIS-DAP)]--&gt;id19{{目标开发板}}
+id10--&gt;id11[(Ozone&lt;br&gt;完善的调试工具, 实时监看, 显示波形)]
+id11-.Terminal.-id16[(J-Link RTT)]--&gt;id14
+id10--&gt;id18[(串口助手&lt;br&gt;显示波形, 数据交互)]--&gt;id15
+id11--&gt;id15
+id16--&gt;id15
+</div><h2 id="写在前面">写在前面 </h2>
+<p>针对原有 MDK-ARM 开发环境的诸多不便，我们尝试更换嵌入式开发工具链，以实现更便捷、高效、优雅的嵌入式开发。目前我们已成功配置基于 JetBrains 家族功能齐全的 CLion IDE 的开发方案，为嵌入式开发提供了完善支持，美中不足的是需收费、内存占用较高。另一种轻量化的开源方案是基于 Visual Studio Code，摒弃 IDE，深入掌控项目构建过程。两种方案都值得尝试。此外，我们强烈推荐使用 SEGGER Ozone 进行调试。</p>
+<p>下面将介绍使用 CubeMX + VS Code + Ozone 配置 STM32 开发环境所涉及的工具：</p>
+<p><code>STM32CubeMX</code>  是一个图形工具，可以非常轻松地配置 STM32 微控制器和微处理器。从 MCU 选型，引脚配置，系统时钟以及外设时钟设置，到外设参数配置，中间件参数配置，它给 STM32 开发者们提供了一种简单，方便，并且直观的方式来完成这些工作。 所有的配置完成后，它还可以根据所选的 IDE 生成对应的工程和初始化 C 代码。</p>
+<p><code>Visual Studio Code</code> 是一个轻量级但功能强大的源代码编辑器，适用于 Windows、macOS 和 Linux。它内置了对 JavaScript、TypeScript 和 Node.js 的支持，并为其他语言和运行时（如 C++、C#、Java、Python、PHP、Go、.NET）提供了丰富的扩展生态系统。</p>
+<p><code>CMake</code> 是一个开源、跨平台的工具系列，旨在构建、测试和打包软件。CMake 用于使用简单的平台和编译器独立配置文件（<code>CMakeLists.txt</code>）来控制软件编译过程，并生成可在您选择的编译器环境中使用的本机 makefile 和工作区。基于 make 工具，交叉编译工具链 <code>gcc-arm-none-eabi</code> 被调用并按照 makefile 的指示，将⽂件编译成 arm 架构下的⽂件格式，如 <code>.elf</code> <code>.bin</code> 等，从⽽供STM32设备使⽤。</p>
+<p>生成可执行文件后，可基于 STM32 设备的调试支持模块，选择合适的工具链方案进行调试：</p>
+<ul>
+<li>首选使用 <code>Ozone</code> 调试方案。Ozone 是用于 J-Link 和 J-Trace 的多平台调试器和性能分析器，功能齐全，可实时监看变量、显示波形等，只需载入可执行文件，便可独立进行调试；内置了调试终端，可基于 <code>J-Link RTT</code> 与开发板进行非侵入式实时数据交互，无需占用开发板串口资源。</li>
+</ul>
+<blockquote>
+<p>注意：在官方说明中，Ozone 仅支持 J-Link。但是我们发现有部分老版本 J-Link 驱动扩展了对 CMSIS-DAP 的支持，但无法保证 J-Link 稳定工作。经过努力，我们成功对这些版本驱动进行逆向破解修改，使得 Ozone 在替换破解的 <code>JLink_x64.dll</code> 之后便能同时流畅支持 J-Link 和 CMSIS-DAP.</p>
+</blockquote>
+<ul>
+<li>
+<p>此外，如果希望在 VSCode 中进行 GDB 调试，可使用 <code>Cortex-Debug 扩展 + GDB Server</code> 调试方案。此方案不做详细介绍，可自行探索。</p>
+<ul>
+<li>
+<p>Cortex-Debug 是一个扩展，用于将 ARM Cortex-M 设备的调试功能添加到 Visual Studio Code。</p>
+</li>
+<li>
+<p>GDB Server 建立了调试器到 GDB 的连接。OpenOCD（Open On-Chip Debugger）是一个开源的片上调试器，旨在提供针对嵌入式设备的调试、系统编程和边界扫描功能，支持 <code>J-Link, CMSIS-DAP, ST-Link</code> 等多种调试器。OpenOCD 提供了GDB Server，可以通过它进行 GDB 相关的调试操作。此外，针对 J-Link，还可以选用 J-Link GDB Server.</p>
+</li>
+<li>
+<p>GDB 调试功能强大，同时可添加 CMSIS SVD (System View Description，系统视图描述文件，<code>*.svd</code>格式）以查看外设信息和其他设备参数。唯一的缺点是无法实现实时变量监视。一种解决方案是基于 STM32 的调试支持模块来输出日志，可基于 Semihosting / SWO 实现，或采用更简洁和便捷的 J-Link RTT 方案；另一种方案是通过串口实现实时数据交互，使用串口助手显示波形。上位机串口助手有多种选择，常用的如 <code>VOFA+</code>，其除了拥有基本功能外，还能够显示浮点波形，功能丰富。MobaXTrem可以作为不错的调试终端。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="软件和工具下载">软件和工具下载 </h2>
+<p><strong>注意安装路径不要含有中文，最好只含有字母、数字、“-”与“_”</strong></p>
+<h3 id="stm32cubemx">STM32CubeMX </h3>
+<ul>
+<li><a href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX 官网</a>下载安装，<strong>版本要求 6.11 及以上</strong></li>
+<li>运行该软件需要有 Java 支持</li>
+</ul>
+<h3 id="visual-studio-code">Visual Studio Code </h3>
+<ul>
+<li><a href="https://code.visualstudio.com/">Visual Studio Code 官网</a>下载安装</li>
+</ul>
+<h3 id="cmake">CMake </h3>
+<ul>
+<li><a href="https://cmake.org/download/">CMake 官网</a>下载安装，<strong>版本要求 V3.22 及以上</strong></li>
+</ul>
+<h3 id="ninja">Ninja </h3>
+<ul>
+<li><a href="https://github.com/ninja-build/ninja/releases">Ninja 编译器</a>下载 <code>ninja-win.zip</code></li>
+</ul>
+<h3 id="gnu-arm-embedded-toolchain">GNU Arm Embedded Toolchain </h3>
+<ul>
+<li><a href="https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads">GNU-ARM 官网</a>下载压缩包，选择 mingw-w64-i686 版本，<strong>版本要求 11.0 及以上</strong></li>
+<li>自行选择路径进行解压</li>
+<li>建议下载后的文件夹重命名下</li>
+</ul>
+<h3 id="j-link">J-Link </h3>
+<ul>
+<li><a href="https://www.segger.com/downloads/jlink/">J-Link 官网</a>下载安装，附带安装 J-Link RTT、J-Link GDB Server 等工具</li>
+</ul>
+<h3 id="ozone">Ozone </h3>
+<ul>
+<li><a href="https://www.segger.com/downloads/jlink/#Ozone">J-Link 官网 Ozone 分区</a>下载安装</li>
+<li>为了后续替换同时支持 J-Link 和 CMSIS-DAP 的驱动文件后能够正常运行，<strong>建议选择版本 V3.26</strong></li>
+</ul>
+<h3 id="openocd可选">OpenOCD（可选） </h3>
+<ul>
+<li>预构建版本（适用于windows）<a href="https://gnutoolchains.com/arm-eabi/openocd/">下载</a></li>
+<li>自行选择路径进行解压，路径名不可包含空格</li>
+</ul>
+<h3 id="vofa可选">VOFA+（可选） </h3>
+<ul>
+<li><a href="https://www.vofa.plus/">VOFA+官网</a>下载</li>
+</ul>
+<h3 id="mobaxterm可选">MobaXTerm（可选） </h3>
+<ul>
+<li><a href="https://mobaxterm.mobatek.net/download.html">MobaXTerm官网</a>下载</li>
+</ul>
+<h2 id="环境配置">环境配置 </h2>
+<ul>
+<li>Windows 系统搜索 <code>环境变量--&gt;编辑系统环境变量--&gt;环境变量--&gt;Path（系统变量）--&gt;编辑--&gt;新建</code>，添加 <code>arm-none-eabi</code> 、 <code>OpenOCD</code>（可选）安装目录下 <code>bin</code> 的路径，同时添加 <code>ninja.exe</code> 所在文件夹的路径</li>
+<li>在终端测试是否安装成功</li>
+</ul>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>ninja <span class="token parameter variable">--version</span>
+arm-none-eabi-gcc <span class="token parameter variable">-v</span>
+openocd <span class="token parameter variable">-v</span>
+</code></pre><ul>
+<li>
+<p>在VS Code中安装相关扩展：</p>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/vscode00.png" alt="Image title"></p>
+<ul>
+<li>
+<p>C/C++</p>
+</li>
+<li>
+<p>CMake</p>
+</li>
+<li>
+<p>CMake Tools</p>
+</li>
+<li>
+<p>koroFileHeader（生成源码文件模板，具体配置内容请参考编程风格指南，可选）</p>
+</li>
+<li>
+<p>Cortex-Debug（用于 GDB 调试，可选）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>其他 VS Code 配置不是必须的，请参考一般的教程</p>
+</li>
+</ul>
+<h2 id="开发">开发 </h2>
+<h3 id="stm32cubemx-生成工程">STM32CubeMX 生成工程 </h3>
+<ul>
+<li>工程配置方法请参考其他教程</li>
+<li>生成工程时，在 <code>Project Manager--&gt;Project--&gt;Toolchain/IDE</code> 选项选择 <code>CMake</code>，勾选 <code>Generate Under Root</code>；其它一些选项建议按下图选择</li>
+<li>点击右上角的 GENERATE CODE 生成代码</li>
+</ul>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/cubemx01.png" alt=""></p>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/cubemx00.png" alt=""></p>
+<h3 id="使用-vs-code-编辑">使用 VS Code 编辑 </h3>
+<ul>
+<li>用 VS Code  打开工程文件夹，目录结构如下
+<ul>
+<li>其中 <code>.mxproject</code> 可删去</li>
+<li><code>CMakeLists.txt</code> 删去，后续换为提供的<a href="#cmakelists-%E6%A8%A1%E6%9D%BF">模板</a></li>
+<li><code>.ld</code> 为链接脚本文件，在链接时使用，本目录下的 <code>.ld</code> 规定了设备内存相关信息</li>
+<li><code>Core/</code> <code>Drivers/</code> 为 CubeMX 按照模板生成的文件，除 <code>Core/Src/main.c</code> 外一般不做改动</li>
+<li><code>cmake</code> 为 CubeMX 根据不同 stm32 型号生成的 cmake 配置文件</li>
+<li><code>CMakePresets.json</code> 为 cmake 的预先配置</li>
+</ul>
+</li>
+</ul>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/vscode01.png" alt="vscode01"></p>
+<blockquote>
+<p><strong>注意事项</strong>：若原始 Toolchain/IDE 选择为 STM32CubeIDE 而后改为 CMake 的工程需要检查 <code>Core/</code> 文件夹下是否存在 <code>Startup/</code> 文件夹，如果存在则需要删去。</p>
+</blockquote>
+<ul>
+<li>
+<p>在工程根目录添加子目录和文件，在 VS Code 中编辑</p>
+<blockquote>
+<p>注意：若开发工程与战队相关、需要队内共享或合作或开源，请遵循文件组织规范、代码架构规范和风格指南</p>
+</blockquote>
+</li>
+<li>
+<p>一些常用的快捷键：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl</code> + <code>Shift</code> + <code>p</code></td>
+<td>显示命令面板</td>
+</tr>
+<tr>
+<td><code>Ctrl</code> + <code>p</code></td>
+<td>快速打开，转到文件</td>
+</tr>
+<tr>
+<td><code>Ctrl</code> + <code>Tab</code></td>
+<td>切换已打开的文件</td>
+</tr>
+<tr>
+<td><code>Ctrl</code> + <code>,</code></td>
+<td>编辑器设置</td>
+</tr>
+<tr>
+<td><code>Ctrl</code> + <code>F</code></td>
+<td>在当前文件中查找</td>
+</tr>
+<tr>
+<td><code>Ctrl</code> + <code>Shift</code> + <code>F</code></td>
+<td>在所有项目文件中查找</td>
+</tr>
+<tr>
+<td><code>Alt</code> + <code>→</code> / <code>←</code></td>
+<td>前进 / 后退</td>
+</tr>
+<tr>
+<td><code>Alt</code> + <code>↑</code> / <code>↓</code></td>
+<td>向上 / 向下移动行</td>
+</tr>
+<tr>
+<td><code>Shift</code> + <code>Alt</code> + <code>F</code></td>
+<td>格式化代码</td>
+</tr>
+<tr>
+<td><code>F2</code></td>
+<td>重命名变量</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>更多快捷键列表可通过 <code>Ctrl + K, Ctrl + S</code> 唤出</p>
+</blockquote>
+</li>
+<li>
+<p>更多 VS Code 功能可参考<a href="https://code.visualstudio.com/docs">官方文档</a>，从中选择感兴趣的话题学习</p>
+</li>
+</ul>
+<h3 id="配置-cmake-工程">配置 CMake 工程 </h3>
+<ul>
+<li>
+<p>添加 <code>CMakeLists.txt</code> <a href="#cmakelists-%E6%A8%A1%E6%9D%BF">模板</a>至工程根目录，修改模板中的 <code>TODO</code> 内容，主要包括：</p>
+<ul>
+<li>工程名</li>
+<li>用户使用的文件夹</li>
+<li>队伍组件所在文件夹</li>
+<li>组件内部默认配置的重写</li>
+<li>添加个人的 <code>*.cmake</code> 文件</li>
+</ul>
+<blockquote>
+<p>注意：若更改 <code>CMakeLists.txt</code> 中的 <code>option</code>、<code>set</code> 等，运行配置肯并不会更新选项，此时需要需要删除 <code>build</code> 目录重新配置</p>
+</blockquote>
+</li>
+<li>
+<p>运行配置：</p>
+<ul>
+<li>可以通过更改构建类型来运行配置</li>
+<li>或者修改 CMakeLists 并保存，将自动配置</li>
+<li>或者通过从命令面板运行 <em>CMake: Configure</em> 命令</li>
+<li>或者在尚未进行配置时直接运行 <em>build</em> ，其中包含了配置步骤</li>
+<li>或在项目根目录下使用命令行：</li>
+</ul>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token function">mkdir</span> build
+<span class="token builtin class-name">cd</span> build
+cmake <span class="token punctuation">..</span>
+</code></pre></li>
+<li>
+<p>至此，已完成了 CMake 工程的所有配置。若配置成功，应当输出类似的信息</p>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/cmake02.png" alt="cmake02"></p>
+</li>
+</ul>
+<h3 id="修改工程">修改工程 </h3>
+<ul>
+<li>在工程根目录添加、删除或重命名子目录和文件，可直接在 Windows 资源管理器中操作或在 VS Code 资源管理器中操作</li>
+<li>此外，还需要修改 CMakeLists.txt，包括更新头文件所在目录 （include_directories）、添加源文件（file）</li>
+<li>在添加、删除或重命名文件后需要重新运行 CMake 工程配置，否则后续的工程构建将报错</li>
+<li>必要时删除 <code>build/</code> 目录重新配置和构建</li>
+</ul>
+<h3 id="构建工程">构建工程 </h3>
+<ul>
+<li>
+<p>从命令面板运行 <em>CMake: Build</em> 命令（快捷键 <code>F7</code>），该命令具有跨平台的特性</p>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/build_command.png" alt="_images/build_command.png"></p>
+<p>或者点击状态栏中的 <em>Build</em>:</p>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/build_button.png" alt="_images/build_button.png"></p>
+</li>
+<li>
+<p>或使用命令行，加入 <code>-jn</code> 以指定使用 <code>n</code> 线程编译，如 <code>-j10</code>：</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token builtin class-name">cd</span> build
+<span class="token function">make</span> <span class="token parameter variable">-j</span>
+</code></pre></li>
+<li>
+<p>若构建成功，应当输出类似的信息：</p>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/cmake03.png" alt="cmake03"></p>
+</li>
+<li>
+<p>默认情况下，CMake 工具将构建输出写入 <code>build/</code> 子目录。该目录下可找到调试所需的 <code>.elf</code> 文件</p>
+</li>
+</ul>
+<h2 id="调试">调试 </h2>
+<h3 id="使用-ozone">使用 Ozone </h3>
+<h4 id="破解">破解 </h4>
+<p>破解后，Ozone V3.26 及之前的 V3.xx 版本均能够同时支持 J-Link 和 CMSIS-DAP。</p>
+<ul>
+<li>
+<p>安装 Ozone 后，将目录下的 <code>JLink_x64.dll</code> 文件替换为破解版本 <a href="https://g6ursaxeei.feishu.cn/wiki/wikcno8IDCTKHQWGDTOOzQFLyMg">下载</a></p>
+</li>
+<li>
+<p><strong>使用 CMSIS-DAP 调试时</strong>，Ozone 会弹窗提示设备没有 License，此问题可通过在 J-Link License Manager 注册解决。若还不清楚如何用 Ozone 创建项目，可之后再进行此步骤。注册流程为：</p>
+<ul>
+<li>
+<p>下载 J-Link / J-Flash 注册机 <a href="https://g6ursaxeei.feishu.cn/wiki/wikcno8IDCTKHQWGDTOOzQFLyMg">下载</a></p>
+</li>
+<li>
+<p>连接好 CMSIS-DAP 调试器，使用 <code>New Project Wizard</code> 新建工程，进行到下图所示步骤，读取调试器序列号：</p>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/image-20221125211505428.png" alt="image-20221125211505428"></p>
+</li>
+</ul>
+<blockquote>
+<p>或先用 Ozone 开启调试，然后点击 Windows 任务栏托盘区的 <img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/icon-jl.png" alt=""> 图标开启 J-Link 控制面板，也能够读取序列号：<img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/panel-jl.png" alt="jl"></p>
+</blockquote>
+<ul>
+<li>将序列号输入注册机生成 License，然后开启 J-Link License Manager（已与 J-Link 捆绑安装），添加 License：</li>
+</ul>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/license-jl.png" alt="lic"></p>
+</li>
+</ul>
+<h4 id="创建项目">创建项目 </h4>
+<ul>
+<li>
+<p>添加对应 <code>*.svd</code> 文件（CMSIS SVD，系统视图描述文件，可选）至工程根目录下以支持查看外设信息和其他设备参数 <a href="https://github.com/cmsis-svd/cmsis-svd/tree/drop-old-python-versions-from-ci/data/STMicro">下载</a></p>
+</li>
+<li>
+<p>进入 Ozone，选择 <code>File--&gt;New--&gt;New Project Wizard</code>：</p>
+<ul>
+<li>选择目标开发板对应的 Device（如 STM32F407IG）, Register Set（如 Cortex-M4 (with FPU)）；Peripherals (optional) 选择对应的 <code>.svd</code> 文件 ，按 Next</li>
+<li>选择 Target Interface = SWD, Target Interface Speed  = 4MHz （默认）或合适的速率，Host Interface = USB；若连接了多个调试器，选择需要使用的那个，按 Next</li>
+<li>选择要调试的可执行文件（如 <code>.elf</code>），按 Next</li>
+<li>如无特殊要求，其他选项保持默认即可</li>
+</ul>
+</li>
+<li>
+<p>点击 <code>File--&gt;Save Project as</code>，将 <code>.jdebug</code> 格式调试文件保存至工程根目录下</p>
+</li>
+</ul>
+<h4 id="下载调试">下载调试 </h4>
+<ul>
+<li>
+<p>点击左上角绿色图标，下载并复位程序，点击工具栏按钮进行调试</p>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/ozone00.png" alt="ozone00"></p>
+</li>
+</ul>
+<blockquote>
+<p>注意：<strong>使用 CMSIS-DAP 时</strong>，若要退出调试，请不要点击<img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/icon00.png" alt="icon00">，否则会导致闪退，目前我们尚未解决这个问题；但这个问题并不影响调试，一般点击 <img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/icon01.png" alt="icon01"> 按钮组合即可执行运行、停止、复位操作，非运行状态下可进行增删窗口、变量、波形等操作<br>
+<strong>使用 J-Link 则一切功能正常</strong></p>
+</blockquote>
+<ul>
+<li>操作和一般的调试器类似，运行、复位、单步运行、打断点</li>
+<li>开启 <code>View</code> 标签下的各种窗口以观察调试信息：
+<ul>
+<li><code>Call Stack</code> 查看调用栈</li>
+<li><code>Global Data</code> 及 <code>Local Data</code> 在程序暂停时更新变量</li>
+<li><code>Register</code> 查看外设信息</li>
+<li><code>Watched Data</code> 能够实时更新变量，在该窗口中右键设定刷新频率</li>
+<li><code>Data Sampling</code> 能够实时采集数据，配合 <code>Timeline</code> 实现波形可视化，并可导出为 <code>.csv</code> 格式；<code>Timeline</code> 还可展示功耗和程序执行信息</li>
+<li><code>Source Files</code> 展示工程源文件，可搜索希望打开的文件，以方便断点调试</li>
+</ul>
+</li>
+<li>右键开启快捷菜单可将变量添加到窗口，或执行其他快捷操作。关于键盘快捷键的使用可自行探索</li>
+<li>若需要编辑源码，建议在 VS Code 中修改编译，无需退出调试，Ozone 将自动检测并提示重新加载可执行文件</li>
+</ul>
+<h4 id="实时传输real-time-transfer">实时传输（Real Time Transfer） </h4>
+<ul>
+<li>J-Link RTT 基于调试器建立主机和目标开发板之间的非侵入式交互，需要目标开发板中调用接口编写对应的程序，处理交互信息</li>
+<li>开启 Ozone 内置的 <code>Terminal</code> 窗口，可接收日志或作为终端执行在线调试</li>
+<li>也可使用其他软件以建立多个终端</li>
+<li>RTT 的相关信息请参考<a href="https://wiki.segger.com/RTT">官方Wiki</a>，或查阅 Ozone 安装目录下的 <code>UM08025_Ozone.pdf</code> 手册</li>
+</ul>
+<h4 id="更多功能介绍">更多功能介绍 </h4>
+<p><img src="CubeMX+VSCode+Ozone%20%E9%85%8D%E7%BD%AE%20STM32%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83(Ninja).assets/ozone01.png" alt="ozone01"></p>
+<ul>
+<li><code>View</code> 标签下的窗口包含了 Ozone 的大部分功能。静态下可观察可执行文件的静态信息；开始调试后，能够观察更多动态信息</li>
+<li>实现C/C++源代码级调试和汇编指令调试；调试信息包括：反汇编、内存、全局变量和局部变量、（实时）监视、CPU和外设寄存器等；可展示RTOS内核相关信息</li>
+<li>可作为编辑器直接修改源代码（但并没有良好的支持，不建议这么做）</li>
+<li>可直接使用 J-Link 内置功能（无限Flash断点、Flash下载、实时终端RTT、指令Trace）</li>
+<li>可编程，支持编写脚本进行自动化调试</li>
+<li>更多功能自行探索，或查阅 Ozone 安装目录下的 <code>UM08025_Ozone.pdf</code> 手册</li>
+</ul>
+<h2 id="附录">附录 </h2>
+<h3 id="cmakelists-模板">CMakeLists 模板 </h3>
+<pre data-role="codeBlock" data-info="cmake" class="language-cmake cmake"><code><span class="token comment"># ##############################################################################</span>
+<span class="token comment"># #################        CMake Template (CUSTOM)       ######################</span>
+<span class="token comment"># #################    Copyright (c) 2023 Hello World    ######################</span>
+<span class="token comment"># ##############################################################################</span>
+
+<span class="token comment"># Set the system name and version</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_SYSTEM_VERSION</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Specify the minimum required version of CMake</span>
+<span class="token keyword keyword-cmake_minimum_required">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.22</span><span class="token punctuation">)</span>
+
+<span class="token keyword keyword-include">include</span><span class="token punctuation">(</span><span class="token string">"cmake/gcc-arm-none-eabi.cmake"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Set the C++ and C standards</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_STANDARD</span> <span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_STANDARD_REQUIRED</span> <span class="token boolean">ON</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_EXTENSIONS</span> <span class="token boolean">ON</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_C_STANDARD</span> <span class="token number">11</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_C_STANDARD_REQUIRED</span> <span class="token boolean">ON</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_C_EXTENSIONS</span> <span class="token boolean">ON</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Set the library path</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_LIBRARY_PATH</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CURRENT_SOURCE_DIR</span><span class="token punctuation">}</span></span>/Lib"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_RUNTIME_OUTPUT_DIRECTORY</span> <span class="token punctuation">${</span><span class="token variable">CMAKE_SOURCE_DIR</span><span class="token punctuation">}</span>/build<span class="token punctuation">)</span>
+
+<span class="token comment"># ########################## USER CONFIG SECTION ##############################</span>
+<span class="token comment"># Set the project name and the languages used</span>
+<span class="token keyword keyword-project">project</span><span class="token punctuation">(</span>test_dm_f4 C CXX ASM<span class="token punctuation">)</span> <span class="token comment"># TODO: change project name here</span>
+
+<span class="token comment"># Specify user folders</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>user_folders <span class="token string">"Resources"</span> <span class="token string">"Tasks"</span><span class="token punctuation">)</span> <span class="token comment"># TODO Add your own user folders here</span>
+
+<span class="token comment"># Specify the path to the HW-Components directory</span>
+<span class="token comment"># set(HWC_DIR "HW-Components") # TODO: Set your own HW-Components path here</span>
+
+<span class="token comment"># # Include utility functions and default configuration</span>
+<span class="token comment"># include("${HWC_DIR}/cmake/utils/function_tools.cmake")</span>
+<span class="token comment"># include("${HWC_DIR}/config.cmake") # Default configuration</span>
+
+<span class="token comment"># TODO: Overwrite default configuration instead of changing it in file</span>
+<span class="token comment"># tools</span>
+<span class="token comment"># set(use_hwcomponents_tools ON)</span>
+<span class="token comment"># set(use_prebuilt_hwcomponents_tools OFF)</span>
+<span class="token comment"># set(... ON)</span>
+
+<span class="token comment"># TODO: Add your own `config.cmake` file or set your own configuration here</span>
+
+<span class="token comment"># Enable preprocessing for assembler files</span>
+<span class="token keyword keyword-add_compile_options">add_compile_options</span><span class="token punctuation">(</span><span class="token punctuation">$&lt;</span><span class="token punctuation">$&lt;</span>COMPILE_LANGUAGE:ASM<span class="token punctuation">&gt;</span>:-x<span class="token punctuation">$&lt;</span>SEMICOLON<span class="token punctuation">&gt;</span>assembler-with-cpp<span class="token punctuation">&gt;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Disable some warnings</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>COM_FLAGS <span class="token string">"-Wno-unused-parameter -Wno-missing-field-initializers -Wno-pedantic -Wno-unknown-pragmas -Wno-comment"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_C_FLAGS</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_C_FLAGS</span><span class="token punctuation">}</span></span> <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">COM_FLAGS</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_FLAGS</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CXX_FLAGS</span><span class="token punctuation">}</span></span> <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">COM_FLAGS</span><span class="token punctuation">}</span></span> -Wno-reorder"</span><span class="token punctuation">)</span>
+
+<span class="token keyword keyword-add_subdirectory">add_subdirectory</span><span class="token punctuation">(</span>cmake/stm32cubemx<span class="token punctuation">)</span>
+<span class="token keyword keyword-get_target_property">get_target_property</span><span class="token punctuation">(</span>STM32_COMPILE_DEFINES stm32cubemx <span class="token property">INTERFACE_COMPILE_DEFINITIONS</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-list">list</span><span class="token punctuation">(</span>APPEND STM32_COMPILE_DEFINES DEBUG<span class="token punctuation">)</span> <span class="token comment"># Add DEBUG definition</span>
+<span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span>STM32_COMPILE_DEFINE <span class="token punctuation">${</span>STM32_COMPILE_DEFINES<span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token comment"># Exclude the element if it starts with "$"</span>
+  <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>STM32_COMPILE_DEFINE <span class="token operator">MATCHES</span> <span class="token string">"^\\$"</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-continue">continue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-endif">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-add_definitions">add_definitions</span><span class="token punctuation">(</span>-D<span class="token punctuation">${</span>STM32_COMPILE_DEFINE<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token comment"># Get HAL filename</span>
+  <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>STM32_COMPILE_DEFINE <span class="token operator">MATCHES</span> <span class="token string">"STM32[A-Z][0-9]"</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-string">string</span><span class="token punctuation">(</span>SUBSTRING <span class="token punctuation">${</span>STM32_COMPILE_DEFINE<span class="token punctuation">}</span> <span class="token number">0</span> <span class="token number">7</span> STM32_DEVICE<span class="token punctuation">)</span>
+    <span class="token keyword keyword-string">string</span><span class="token punctuation">(</span>TOLOWER <span class="token punctuation">${</span>STM32_DEVICE<span class="token punctuation">}</span> stm32_hal_filename<span class="token punctuation">)</span>
+    <span class="token keyword keyword-string">string</span><span class="token punctuation">(</span>CONCAT stm32_hal_filename <span class="token punctuation">${</span>stm32_hal_filename<span class="token punctuation">}</span> <span class="token string">"xx_hal.h"</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-message">message</span><span class="token punctuation">(</span>STATUS <span class="token string">"HAL file name: <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">stm32_hal_filename</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token comment"># Set macro for the HAL filename</span>
+    <span class="token keyword keyword-add_definitions">add_definitions</span><span class="token punctuation">(</span>-DSTM32_HAL_FILENAME=<span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">stm32_hal_filename</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-endif">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-endforeach">endforeach</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">##ADD_FUNCTIONS</span>
+<span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>search_incs_recurse root_dir res_list<span class="token punctuation">)</span>
+  <span class="token keyword keyword-get_filename_component">get_filename_component</span><span class="token punctuation">(</span>root_name <span class="token punctuation">${</span>root_dir<span class="token punctuation">}</span> <span class="token property">NAME</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>_<span class="token punctuation">${</span>root_name<span class="token punctuation">}</span>_incs <span class="token punctuation">${</span>root_dir<span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-file">file</span><span class="token punctuation">(</span>
+    GLOB children
+    RELATIVE <span class="token punctuation">${</span>root_dir<span class="token punctuation">}</span>
+    <span class="token punctuation">${</span>root_dir<span class="token punctuation">}</span>/*<span class="token punctuation">)</span>
+  <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span>child <span class="token punctuation">${</span>children<span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>sub_dir <span class="token punctuation">${</span>root_dir<span class="token punctuation">}</span>/<span class="token punctuation">${</span>child<span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>IS_DIRECTORY <span class="token punctuation">${</span>sub_dir<span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token keyword keyword-get_filename_component">get_filename_component</span><span class="token punctuation">(</span>child_name <span class="token punctuation">${</span>child<span class="token punctuation">}</span> <span class="token property">NAME</span><span class="token punctuation">)</span>
+      <span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>__<span class="token punctuation">${</span>child_name<span class="token punctuation">}</span>_incs<span class="token punctuation">)</span>
+      <span class="token function">search_incs_recurse</span><span class="token punctuation">(</span><span class="token punctuation">${</span>sub_dir<span class="token punctuation">}</span> __<span class="token punctuation">${</span>child_name<span class="token punctuation">}</span>_incs<span class="token punctuation">)</span>
+      <span class="token keyword keyword-list">list</span><span class="token punctuation">(</span>APPEND _<span class="token punctuation">${</span>root_name<span class="token punctuation">}</span>_incs <span class="token punctuation">${</span>__<span class="token punctuation">${</span>child_name<span class="token punctuation">}</span>_incs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-endif">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-endforeach">endforeach</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token punctuation">${</span>res_list<span class="token punctuation">}</span>
+      <span class="token punctuation">${</span>_<span class="token punctuation">${</span>root_name<span class="token punctuation">}</span>_incs<span class="token punctuation">}</span>
+      PARENT_SCOPE<span class="token punctuation">)</span>
+  <span class="token keyword keyword-return">return</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-endfunction">endfunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">##</span>
+
+<span class="token comment"># #################### ADD LIBRARIES AND EXECUTABLE SECTION ####################</span>
+<span class="token comment"># Initialize source and include lists</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>project_srcs<span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>project_incs<span class="token punctuation">)</span>
+
+<span class="token comment"># Search for include files and source files in the Core directory</span>
+<span class="token function">search_incs_recurse</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CURRENT_SOURCE_DIR</span><span class="token punctuation">}</span></span>/Core"</span> core_incs<span class="token punctuation">)</span>
+<span class="token keyword keyword-file">file</span><span class="token punctuation">(</span>GLOB_RECURSE core_srcs <span class="token string">"Core/*.*"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-list">list</span><span class="token punctuation">(</span>APPEND project_srcs <span class="token punctuation">${</span>core_srcs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-list">list</span><span class="token punctuation">(</span>APPEND project_incs <span class="token punctuation">${</span>core_incs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Search for include files and source files in the Drivers directory</span>
+<span class="token function">search_incs_recurse</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CURRENT_SOURCE_DIR</span><span class="token punctuation">}</span></span>/Drivers"</span> drivers_incs<span class="token punctuation">)</span>
+<span class="token keyword keyword-file">file</span><span class="token punctuation">(</span>GLOB_RECURSE drivers_srcs <span class="token string">"Drivers/*.*"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-list">list</span><span class="token punctuation">(</span>APPEND project_incs <span class="token punctuation">${</span>drivers_incs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment"># For each user folder, search for include files and source files</span>
+<span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span>user_folder <span class="token punctuation">${</span>user_folders<span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token function">search_incs_recurse</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CURRENT_SOURCE_DIR</span><span class="token punctuation">}</span></span>/<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">user_folder</span><span class="token punctuation">}</span></span>"</span>
+                      <span class="token punctuation">${</span>user_folder<span class="token punctuation">}</span>_incs<span class="token punctuation">)</span>
+  <span class="token keyword keyword-file">file</span><span class="token punctuation">(</span>GLOB_RECURSE <span class="token punctuation">${</span>user_folder<span class="token punctuation">}</span>_srcs <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">user_folder</span><span class="token punctuation">}</span></span>/*.*"</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-list">list</span><span class="token punctuation">(</span>APPEND project_incs <span class="token punctuation">${</span><span class="token punctuation">${</span>user_folder<span class="token punctuation">}</span>_incs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-list">list</span><span class="token punctuation">(</span>APPEND project_srcs <span class="token punctuation">${</span><span class="token punctuation">${</span>user_folder<span class="token punctuation">}</span>_srcs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-endforeach">endforeach</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Add a static library for the drivers</span>
+<span class="token keyword keyword-add_library">add_library</span><span class="token punctuation">(</span>drivers <span class="token namespace">STATIC</span> <span class="token punctuation">${</span>drivers_srcs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-target_include_directories">target_include_directories</span><span class="token punctuation">(</span>drivers <span class="token namespace">PUBLIC</span> <span class="token punctuation">${</span>core_incs<span class="token punctuation">}</span> <span class="token punctuation">${</span>drivers_incs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Add the HW-Components directory as a subdirectory</span>
+<span class="token comment"># add_subdirectory(${HWC_DIR})</span>
+
+<span class="token comment"># Add an executable for the project</span>
+<span class="token keyword keyword-file">file</span><span class="token punctuation">(</span>GLOB_RECURSE startup_file <span class="token string">"*.s"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-add_executable">add_executable</span><span class="token punctuation">(</span><span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span> <span class="token punctuation">${</span>project_srcs<span class="token punctuation">}</span> <span class="token punctuation">${</span>startup_file<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-message">message</span><span class="token punctuation">(</span>STATUS <span class="token string">"Project name: <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Add the project includes to the executable</span>
+<span class="token keyword keyword-target_include_directories">target_include_directories</span><span class="token punctuation">(</span><span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span> <span class="token namespace">PUBLIC</span> <span class="token punctuation">${</span>project_incs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-target_include_directories">target_include_directories</span><span class="token punctuation">(</span><span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span> <span class="token namespace">PUBLIC</span> <span class="token punctuation">${</span><span class="token punctuation">${</span>HWC_LIB_PREFIX<span class="token punctuation">}</span>_incs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Link the drivers library and the HW-Components library to the executable</span>
+<span class="token keyword keyword-target_link_libraries">target_link_libraries</span><span class="token punctuation">(</span><span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span> <span class="token namespace">PUBLIC</span> drivers<span class="token punctuation">)</span>
+<span class="token keyword keyword-target_link_libraries">target_link_libraries</span><span class="token punctuation">(</span><span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span> <span class="token namespace">PUBLIC</span> <span class="token punctuation">${</span><span class="token punctuation">${</span>HWC_LIB_PREFIX<span class="token punctuation">}</span>_libs<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Define the output hex and bin files</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>HEX_FILE <span class="token punctuation">${</span><span class="token variable">PROJECT_BINARY_DIR</span><span class="token punctuation">}</span>/<span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span>.hex<span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>BIN_FILE <span class="token punctuation">${</span><span class="token variable">PROJECT_BINARY_DIR</span><span class="token punctuation">}</span>/<span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span>.bin<span class="token punctuation">)</span>
+
+<span class="token comment"># Add a post-build command to generate the hex and bin files</span>
+<span class="token keyword keyword-add_custom_command">add_custom_command</span><span class="token punctuation">(</span>
+  TARGET <span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span>
+  POST_BUILD
+  COMMAND <span class="token punctuation">${</span><span class="token variable">CMAKE_OBJCOPY</span><span class="token punctuation">}</span> -Oihex <span class="token punctuation">$&lt;</span>TARGET_FILE:<span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span><span class="token punctuation">&gt;</span> <span class="token punctuation">${</span>HEX_FILE<span class="token punctuation">}</span>
+  COMMAND <span class="token punctuation">${</span><span class="token variable">CMAKE_OBJCOPY</span><span class="token punctuation">}</span> -Obinary <span class="token punctuation">$&lt;</span>TARGET_FILE:<span class="token punctuation">${</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">}</span><span class="token punctuation">&gt;</span>
+          <span class="token punctuation">${</span>BIN_FILE<span class="token punctuation">}</span>
+  COMMENT <span class="token string">"Building <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">HEX_FILE</span><span class="token punctuation">}</span></span> Building <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">BIN_FILE</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+</code></pre><h3 id="参考资料">参考资料 </h3>
+<p>[1] 薛东来. CubeMX+VSCode+Ozone 配置 STM32 开发环境.</p>
+<p>[2] <a href="https://www.st.com/en/development-tools/stm32cubemx.html">https://www.st.com/en/development-tools/stm32cubemx.html</a></p>
+<p>[3] <a href="https://cmake.org/">https://cmake.org/</a></p>
+<p>[4] <a href="https://www.segger.com/products/development-tools/ozone-j-link-debugger/">https://www.segger.com/products/development-tools/ozone-j-link-debugger/</a></p>
+<p>[5] <a href="https://openocd.org/">https://openocd.org/</a></p>
+<p>[6] <a href="https://github.com/Marus/cortex-debug/wiki">https://github.com/Marus/cortex-debug/wiki</a></p>
+<h3 id="版本说明">版本说明 </h3>
+<table>
+<thead>
+<tr>
+<th>版本号</th>
+<th>发布日期</th>
+<th>说明</th>
+<th>贡献者</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://img.shields.io/badge/version-0.9.0-green" alt="hh"></td>
+<td>2024.04.07</td>
+<td>预发布</td>
+<td>蔡坤镇</td>
+</tr>
+</tbody>
+</table>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>
